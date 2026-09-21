@@ -128,17 +128,7 @@ main {
 }
 
 .home-hero::before {
-  position: absolute;
-  inset: 24px -7vw auto auto;
-  z-index: -1;
-  width: 54vw;
-  height: 82%;
-  content: "";
-  border: 1px solid rgba(41, 45, 203, 0.1);
-  border-radius: 36px;
-  background:
-    linear-gradient(135deg, rgba(41, 45, 203, 0.08), rgba(255, 255, 255, 0.68)),
-    repeating-linear-gradient(90deg, rgba(41, 45, 203, 0.07) 0 1px, transparent 1px 72px);
+  display: none;
 }
 
 .home-hero-copy h1 {
@@ -163,9 +153,9 @@ main {
   border: 1px solid var(--line);
   border-radius: 34px;
   background:
-    radial-gradient(circle at 50% 44%, rgba(41, 45, 203, 0.24), transparent 15rem),
-    linear-gradient(135deg, #ffffff, #eef2ff 48%, #ffffff);
-  box-shadow: 0 32px 90px rgba(17, 19, 54, 0.18);
+    radial-gradient(circle at 50% 44%, rgba(41, 45, 203, 0.08), transparent 15rem),
+    linear-gradient(135deg, #ffffff, #f7f8fc 48%, #ffffff);
+  box-shadow: 0 22px 64px rgba(17, 19, 54, 0.1);
 }
 
 .home-hero-visual::after {
