@@ -955,7 +955,7 @@ h2 {
 
 .use-case-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 }
 
@@ -975,31 +975,6 @@ h2 {
   transform: translateY(-5px);
   border-color: rgba(41, 45, 203, 0.28);
   box-shadow: 0 32px 84px rgba(41, 45, 203, 0.16);
-}
-
-.use-case-card-featured {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
-}
-
-.use-case-card-featured img {
-  height: 100%;
-  min-height: 430px;
-  aspect-ratio: auto;
-}
-
-.use-case-card-featured .use-case-card-content {
-  min-height: 340px;
-}
-
-.use-case-card-featured h3 {
-  max-width: 620px;
-  font-size: clamp(2rem, 3vw, 3.1rem);
-}
-
-.use-case-card-featured p:not(.eyebrow) {
-  max-width: 680px;
 }
 
 .use-case-card img {
@@ -1100,35 +1075,6 @@ h2 {
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.84);
   box-shadow: var(--shadow);
-}
-
-.home-press-preview {
-  padding-top: 34px;
-}
-
-.home-press-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.9fr 0.9fr;
-  gap: 18px;
-}
-
-.home-press-grid img {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  background: var(--ivory);
-  box-shadow: var(--shadow);
-}
-
-.home-press-grid img:first-child {
-  height: 420px;
-  grid-row: span 2;
-}
-
-.home-press-actions {
-  margin-top: 24px;
 }
 
 .use-case-card .button {
@@ -1527,17 +1473,6 @@ h2 {
     grid-template-columns: 1fr;
   }
 
-  .use-case-card-featured {
-    grid-column: auto;
-    display: block;
-  }
-
-  .use-case-card-featured img {
-    height: auto;
-    min-height: 0;
-    aspect-ratio: 16 / 10;
-  }
-
   .use-case-card-content {
     min-height: auto;
   }
@@ -1549,16 +1484,6 @@ h2 {
   .home-closing {
     gap: 24px;
     padding-bottom: 56px;
-  }
-
-  .home-press-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .home-press-grid img,
-  .home-press-grid img:first-child {
-    height: 260px;
-    grid-row: auto;
   }
 
   .image-card,
