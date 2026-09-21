@@ -162,15 +162,10 @@ main {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 34px;
-  background: #090b12;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(41, 45, 203, 0.24), transparent 15rem),
+    linear-gradient(135deg, #ffffff, #eef2ff 48%, #ffffff);
   box-shadow: 0 32px 90px rgba(17, 19, 54, 0.18);
-}
-
-.home-hero-visual img {
-  width: 100%;
-  height: 100%;
-  min-height: 560px;
-  object-fit: cover;
 }
 
 .home-hero-visual::after {
@@ -178,49 +173,118 @@ main {
   inset: 0;
   content: "";
   background:
-    linear-gradient(180deg, rgba(5, 7, 13, 0.04), rgba(5, 7, 13, 0.74)),
-    linear-gradient(90deg, rgba(5, 7, 13, 0.2), transparent 56%);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.64), transparent 32%, rgba(255, 255, 255, 0.64)),
+    repeating-linear-gradient(0deg, rgba(41, 45, 203, 0.08) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(90deg, rgba(41, 45, 203, 0.08) 0 1px, transparent 1px 56px);
   pointer-events: none;
 }
 
-.hero-insight-panel {
-  position: absolute;
-  right: 22px;
-  bottom: 22px;
-  left: 22px;
-  z-index: 1;
-  padding: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 22px;
-  color: #ffffff;
-  background: rgba(6, 8, 16, 0.72);
-  backdrop-filter: blur(18px);
+.home-signal-board {
+  display: grid;
+  place-items: center;
 }
 
-.hero-insight-panel span {
+.signal-board-top {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 1;
+}
+
+.signal-board-top span,
+.signal-card span {
   display: block;
-  margin-bottom: 10px;
-  color: #9ea4ff;
+  margin-bottom: 8px;
+  color: var(--brand);
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.hero-insight-panel strong {
+.signal-board-top strong,
+.signal-card strong {
   display: block;
-  margin-bottom: 10px;
+  color: var(--ink);
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: 1.08rem;
   font-weight: 700;
   line-height: 1.1;
   text-transform: uppercase;
 }
 
-.hero-insight-panel p {
+.signal-orbit {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(64%, 340px);
+  aspect-ratio: 1;
+  place-items: center;
+}
+
+.orbit-ring {
+  position: absolute;
+  border: 1px solid rgba(41, 45, 203, 0.22);
+  border-radius: 50%;
+}
+
+.orbit-ring-one {
+  inset: 0;
+}
+
+.orbit-ring-two {
+  inset: 17%;
+  border-style: dashed;
+}
+
+.orbit-core {
+  display: grid;
+  width: 112px;
+  height: 112px;
+  place-items: center;
+  border: 1px solid rgba(41, 45, 203, 0.28);
+  border-radius: 50%;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  box-shadow: 0 22px 62px rgba(41, 45, 203, 0.28);
+}
+
+.signal-card {
+  position: absolute;
+  z-index: 2;
+  width: min(260px, 48%);
+  padding: 18px;
+  border: 1px solid rgba(41, 45, 203, 0.16);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 18px 46px rgba(41, 45, 203, 0.12);
+  backdrop-filter: blur(14px);
+}
+
+.signal-card p {
   margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.78);
-  line-height: 1.55;
+  color: var(--stone);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.signal-card-athlete {
+  top: 24%;
+  right: 24px;
+}
+
+.signal-card-civic {
+  bottom: 28%;
+  left: 24px;
+}
+
+.signal-card-health {
+  right: 46px;
+  bottom: 42px;
 }
 
 .home-summary {
@@ -1251,8 +1315,7 @@ h2 {
     width: 78vw;
   }
 
-  .home-hero-visual,
-  .home-hero-visual img {
+  .home-hero-visual {
     min-height: 430px;
   }
 
@@ -1316,17 +1379,44 @@ h2 {
     line-height: 1.12;
   }
 
-  .home-hero-visual,
-  .home-hero-visual img {
+  .home-hero-visual {
     min-height: 360px;
   }
 
-  .hero-insight-panel {
-    right: 14px;
-    bottom: 14px;
-    left: 14px;
+  .signal-board-top {
+    top: 18px;
+    left: 18px;
+  }
+
+  .signal-orbit {
+    width: min(74%, 270px);
+  }
+
+  .orbit-core {
+    width: 88px;
+    height: 88px;
+    font-size: 1.35rem;
+  }
+
+  .signal-card {
+    width: min(230px, 58%);
     padding: 16px;
     border-radius: 16px;
+  }
+
+  .signal-card-athlete {
+    top: 26%;
+    right: 14px;
+  }
+
+  .signal-card-civic {
+    bottom: 30%;
+    left: 14px;
+  }
+
+  .signal-card-health {
+    right: 22px;
+    bottom: 18px;
   }
 
   .home-summary {
