@@ -1,192 +1,956 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GameFace | Conscience IQ</title>
     <meta
       name="description"
-      content="GameFace helps people understand stress, readiness, and next steps in simple language."
+      content="GameFace helps athletes and teams understand readiness, recovery, pressure, and support needs in simple language."
     />
-    <link rel="stylesheet" href="css/use-cases.css" />
-    <script src="js/use-cases.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #050608;
+        --bg2: #080b0e;
+        --panel: #0d1115;
+        --white: #f4f4f1;
+        --soft: #c2c7ca;
+        --muted: #747d84;
+        --orange: #ff8a24;
+        --cyan: #45e0bd;
+        --purple: #8a6cff;
+        --pink: #ff4f8b;
+        --green: #6fe28d;
+        --line: rgba(255,255,255,.09);
+        --line-strong: rgba(255,255,255,.16);
+        --display: "Bebas Neue", sans-serif;
+        --body: "Manrope", sans-serif;
+        --mono: "Space Mono", monospace;
+        --max: 1420px;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body { overflow-x: hidden; color: var(--white); background: var(--bg); font-family: var(--body); }
+      a { color: inherit; text-decoration: none; }
+      img, video { display: block; max-width: 100%; }
+      .container { width: min(calc(100% - 56px), var(--max)); margin: auto; }
+      .mono { font-family: var(--mono); }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--orange);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--orange);
+        box-shadow: 0 0 14px rgba(255,138,36,.7);
+        content: "";
+      }
+
+      h1, h2, h3 {
+        font-family: var(--display);
+        font-weight: 400;
+        letter-spacing: .01em;
+        line-height: .92;
+        text-transform: uppercase;
+      }
+
+      h2 { font-size: clamp(48px, 6vw, 92px); }
+      p { color: var(--soft); line-height: 1.7; }
+
+      .nav {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 1000;
+        height: 72px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(5,6,8,.82);
+        backdrop-filter: blur(18px);
+      }
+
+      .nav-inner {
+        display: flex;
+        width: min(calc(100% - 56px), var(--max));
+        height: 100%;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin: auto;
+      }
+
+      .brand {
+        font-family: var(--display);
+        font-size: 27px;
+        letter-spacing: .08em;
+      }
+
+      .brand span { color: var(--orange); }
+      .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+      .nav-links a:hover { color: var(--white); }
+      .nav-button, .btn {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255,138,36,.55);
+        padding: 0 17px;
+        color: var(--orange);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+
+      .btn-primary { color: #06100e; border-color: var(--cyan); background: var(--cyan); }
+      .btn-secondary { color: var(--orange); background: transparent; }
+
+      .hero {
+        position: relative;
+        display: flex;
+        min-height: 900px;
+        align-items: center;
+        overflow: hidden;
+        border-bottom: 1px solid var(--line);
+        padding-top: 72px;
+        background:
+          radial-gradient(circle at 80% 42%, rgba(69,224,189,.10), transparent 24%),
+          radial-gradient(circle at 73% 54%, rgba(255,138,36,.11), transparent 33%),
+          linear-gradient(180deg, #050608 0%, #070a0d 100%);
+      }
+
+      .hero::before {
+        position: absolute;
+        inset: 0;
+        opacity: .45;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255,255,255,.026) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.026) 1px, transparent 1px);
+        background-size: 76px 76px;
+        content: "";
+        mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+      }
+
+      .hero-grid {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        width: min(calc(100% - 56px), var(--max));
+        grid-template-columns: 1.05fr .95fr;
+        gap: 74px;
+        align-items: center;
+        margin: auto;
+      }
+
+      .hero-title {
+        max-width: 790px;
+        margin: 22px 0 28px;
+        font-size: clamp(74px, 8.8vw, 142px);
+        line-height: .8;
+      }
+
+      .hero-title span { color: var(--orange); text-shadow: 0 0 42px rgba(255,138,36,.14); }
+      .hero-description { max-width: 625px; margin-bottom: 32px; font-size: 17px; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+      .hero-trust {
+        display: grid;
+        max-width: 650px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 34px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+      }
+
+      .hero-trust-item { padding-right: 20px; border-right: 1px solid var(--line); }
+      .hero-trust-item:nth-child(2), .hero-trust-item:last-child { padding-left: 20px; }
+      .hero-trust-item:last-child { border-right: 0; }
+      .hero-trust-item strong { display: block; font-family: var(--display); font-size: 29px; font-weight: 400; }
+      .hero-trust-item span { display: block; margin-top: 4px; color: var(--muted); font-family: var(--mono); font-size: 7px; letter-spacing: .11em; text-transform: uppercase; }
+
+      .hero-visual { position: relative; display: grid; min-height: 640px; place-items: center; }
+      .hero-console {
+        position: relative;
+        width: min(610px, 100%);
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background:
+          linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+          radial-gradient(circle at center, rgba(69,224,189,.07), transparent 47%),
+          rgba(7,10,13,.84);
+        background-size: 42px 42px, 42px 42px, auto, auto;
+        box-shadow: 0 30px 90px rgba(0,0,0,.35);
+      }
+
+      .console-top {
+        position: absolute;
+        top: 26px;
+        right: 28px;
+        left: 28px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 8px;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      .console-live { display: inline-flex; align-items: center; gap: 8px; color: var(--green); }
+      .console-live i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 16px rgba(111,226,141,.8); animation: livePulse 1.8s ease-in-out infinite; }
+      @keyframes livePulse { 0%,100% { opacity:.45; transform:scale(.86); } 50% { opacity:1; transform:scale(1.15); } }
+
+      .state-orbit {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 390px;
+        height: 390px;
+        transform: translate(-50%,-50%);
+        border: 1px solid rgba(255,255,255,.10);
+        border-radius: 50%;
+      }
+
+      .state-orbit::before, .state-orbit::after {
+        position: absolute;
+        inset: 45px;
+        border: 1px dashed rgba(69,224,189,.24);
+        border-radius: 50%;
+        animation: orbitSpin 22s linear infinite;
+        content: "";
+      }
+
+      .state-orbit::after { inset: 98px; border-color: rgba(255,138,36,.27); border-style: solid; animation-direction: reverse; animation-duration: 16s; }
+      .orbit-sweep { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 180deg, transparent 0 76%, rgba(69,224,189,.18) 84%, rgba(255,138,36,.20) 91%, transparent 98%); animation: orbitSpin 9s linear infinite; }
+      @keyframes orbitSpin { to { transform: rotate(360deg); } }
+
+      .state-core {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 4;
+        display: flex;
+        width: 190px;
+        height: 190px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: translate(-50%,-50%);
+        border: 1px solid rgba(69,224,189,.36);
+        border-radius: 50%;
+        background: rgba(5,8,10,.92);
+        text-align: center;
+      }
+
+      .state-core strong {
+        display: grid;
+        width: 126px;
+        height: 126px;
+        place-items: center;
+        border-radius: 50%;
+        color: #06100e;
+        background: var(--cyan);
+        font-family: var(--display);
+        font-size: 68px;
+        font-weight: 400;
+        line-height: .7;
+        box-shadow: 0 0 55px rgba(69,224,189,.25);
+      }
+
+      .state-core span { max-width: 150px; margin-top: 13px; color: var(--soft); font-family: var(--mono); font-size: 7px; letter-spacing: .13em; line-height: 1.55; text-transform: uppercase; }
+
+      .hero-edge-badge {
+        position: absolute;
+        bottom: 104px;
+        left: 50%;
+        z-index: 6;
+        width: min(260px, calc(100% - 48px));
+        padding: 11px 16px;
+        transform: translateX(-50%);
+        border: 1px solid rgba(69,224,189,.24);
+        background: rgba(5,8,10,.92);
+        text-align: center;
+        box-shadow: 0 14px 35px rgba(0,0,0,.28);
+      }
+
+      .hero-edge-badge small, .hero-edge-badge span { display: block; color: var(--muted); font-family: var(--mono); font-size: 7px; letter-spacing: .09em; line-height: 1.5; }
+      .hero-edge-badge strong { display: block; margin: 5px 0; color: var(--cyan); font-family: var(--display); font-size: 40px; font-weight: 400; line-height: .9; }
+
+      .state-node {
+        position: absolute;
+        z-index: 5;
+        width: 126px;
+        padding: 13px 14px;
+        border: 1px solid var(--line);
+        background: rgba(7,10,13,.92);
+        backdrop-filter: blur(10px);
+      }
+
+      .state-node small { display: block; color: var(--muted); font-family: var(--mono); font-size: 7px; letter-spacing: .1em; text-transform: uppercase; }
+      .state-node strong { display: block; margin-top: 5px; font-family: var(--display); font-size: 27px; font-weight: 400; line-height: 1; }
+      .node-a { left: 36px; top: 118px; border-left-color: var(--cyan); }
+      .node-b { right: 34px; top: 145px; border-left-color: var(--purple); }
+      .node-c { left: 52px; bottom: 103px; border-left-color: var(--green); }
+      .node-d { right: 46px; bottom: 93px; border-left-color: var(--orange); }
+
+      .ticker { overflow: hidden; border-block: 1px solid var(--line); white-space: nowrap; }
+      .ticker-inner { display: flex; width: max-content; animation: ticker 30s linear infinite; }
+      .ticker-item { padding: 18px 35px; border-right: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+      .ticker-item strong { color: var(--orange); font-weight: 400; }
+      @keyframes ticker { to { transform: translateX(-50%); } }
+
+      .section, .film-detail, .cta { overflow: clip; padding: 105px 0; border-bottom: 1px solid var(--line); }
+      .film-detail { background: linear-gradient(180deg, var(--bg2), var(--bg)); }
+      .section-head { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 50px; }
+      .section-head-copy { max-width: 720px; min-width: 0; }
+      .section-head h2 { margin-top: 17px; }
+      .section-head p { max-width: 650px; margin-top: 18px; }
+      .section-index { color: var(--muted); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+
+      .film-detail-grid, .signal-grid, .journey {
+        display: grid;
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+
+      .film-detail-grid { grid-template-columns: repeat(4, 1fr); margin-top: 42px; }
+      .film-detail-card, .metric, .journey-item, .protocol, .flag-card, .language-card, .squad-film-card, .season-card, .privacy-card {
+        min-width: 0;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: var(--panel);
+      }
+
+      .film-detail-card { min-height: 245px; padding: 25px; }
+      .film-detail-card h3 { margin: 26px 0 15px; font-size: 34px; }
+      .film-detail-card p { max-width: 280px; color: var(--muted); font-size: 11px; line-height: 1.8; }
+      .detail-index, .metric-name, .protocol-number, .read-title { color: var(--orange); font-family: var(--mono); font-size: 8px; letter-spacing: .11em; text-transform: uppercase; }
+
+      .video-shell { position: relative; border: 1px solid var(--line); background: #000; }
+      .video-shell video { width: 100%; max-height: 760px; object-fit: cover; }
+      .video-label { position: absolute; top: 20px; left: 20px; z-index: 2; border: 1px solid var(--line-strong); padding: 10px 13px; color: var(--orange); background: rgba(5,6,8,.9); font-family: var(--mono); font-size: 9px; letter-spacing: .1em; }
+
+      .split, .cycle-layout, .protocol-layout, .maya-detail, .privacy-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
+        align-items: center;
+      }
+
+      .split-image, .protocol-image, .responsible-image { width: 100%; height: 570px; object-fit: cover; border: 1px solid var(--line); }
+      .conversation, .device-contract, .read-box {
+        margin-top: 35px;
+        border-left: 3px solid var(--orange);
+        padding: 24px;
+        background: var(--panel);
+      }
+
+      .conversation small, .device-contract small { display: block; margin-bottom: 10px; color: var(--orange); font-family: var(--mono); font-size: 9px; text-transform: uppercase; }
+      .signal-board { margin-top: 35px; border: 1px solid var(--line); }
+      .signal-row { display: grid; grid-template-columns: 120px 1fr; min-height: 75px; border-bottom: 1px solid var(--line); }
+      .signal-row:last-child { border-bottom: 0; }
+      .signal-label { display: flex; align-items: center; padding: 18px; border-right: 1px solid var(--line); color: var(--orange); font-family: var(--mono); font-size: 9px; }
+      .signal-items { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 18px; }
+      .signal-chip { border: 1px solid var(--line); padding: 8px 10px; color: var(--soft); font-family: var(--mono); font-size: 9px; }
+
+      .flagged { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+      .flag-card { padding: 30px; border: 1px solid var(--line); }
+      .flag-card.large { grid-row: span 2; }
+      .flag-card h3 { margin: 12px 0 22px; font-size: 42px; }
+      .flag-number { color: var(--orange); font-family: var(--display); font-size: 80px; line-height: 1; }
+      .flag-description { margin-top: 15px; color: var(--soft); font-size: 13px; }
+      .disclaimer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: 9px; line-height: 1.7; }
+
+      .signal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .metric { min-height: 190px; padding: 25px; overflow: hidden; }
+      .metric-name { color: var(--muted); font-size: 9px; }
+      .metric-value { margin-top: 22px; font-family: var(--display); font-size: 53px; overflow-wrap: anywhere; }
+      .metric-value span { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+      .metric-source { margin-top: 20px; color: var(--orange); font-family: var(--mono); font-size: 8px; }
+
+      .language-grid, .squad-film-summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .language-card, .squad-film-card, .season-card, .privacy-card { padding: 27px; border: 1px solid var(--line); }
+      .language-card h3, .season-card h3 { margin: 20px 0 18px; font-size: 39px; }
+      .marker-list { display: grid; gap: 8px; margin-top: 20px; }
+      .marker-item { display: flex; justify-content: space-between; gap: 18px; padding: 10px 0; border-bottom: 1px solid var(--line); color: var(--soft); font-family: var(--mono); font-size: 8px; }
+      .marker-item strong { color: var(--green); font-weight: 400; }
+
+      .cycle { position: relative; display: flex; width: min(480px, 90vw); aspect-ratio: 1; align-items: center; justify-content: center; margin: auto; border: 1px solid var(--line-strong); border-radius: 50%; }
+      .cycle::before { position: absolute; inset: 38px; border: 1px dashed rgba(255,138,36,.4); border-radius: 50%; content: ""; }
+      .cycle::after { position: absolute; inset: 95px; border: 1px solid rgba(69,224,189,.2); border-radius: 50%; content: ""; }
+      .cycle-center { position: relative; z-index: 2; text-align: center; }
+      .cycle-center strong { display: block; color: var(--orange); font-family: var(--display); font-size: 90px; line-height: .8; }
+      .cycle-center span { display: block; margin-top: 16px; color: var(--muted); font-family: var(--mono); font-size: 9px; letter-spacing: .1em; }
+      .cycle-label { position: absolute; width: 120px; color: var(--cyan); font-family: var(--mono); font-size: 9px; letter-spacing: .08em; line-height: 1.1; text-align: center; }
+      .cycle-label strong { display: block; font-family: var(--display); font-size: 18px; font-weight: 400; }
+      .cycle-label span { display: block; margin-top: 5px; color: var(--muted); font-size: 6px; letter-spacing: .12em; }
+      .cycle-label:nth-child(1) { top: 25px; left: 50%; transform: translateX(-50%); }
+      .cycle-label:nth-child(2) { top: 50%; right: 24px; color: var(--purple); }
+      .cycle-label:nth-child(3) { bottom: 35px; left: 50%; transform: translateX(-50%); color: var(--green); }
+      .cycle-label:nth-child(4) { top: 50%; left: 22px; color: var(--orange); }
+      .edge-box { display: flex; justify-content: space-between; margin-top: 30px; border: 1px solid var(--line); padding: 22px; }
+      .edge-number { font-family: var(--display); font-size: 54px; }
+
+      .protocols { display: grid; gap: 12px; }
+      .protocol { padding: 27px; border: 1px solid var(--line); transition: .25s ease; }
+      .protocol:hover { border-color: rgba(255,138,36,.55); transform: translateX(5px); }
+      .protocol h3 { margin: 10px 0; font-size: 38px; }
+      .protocol p { font-size: 13px; }
+      .protocol-meta { display: inline-flex; margin-top: 18px; border: 1px solid var(--line); padding: 7px 9px; color: var(--orange); font-family: var(--mono); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+
+      .alert { border: 1px solid rgba(255,79,139,.35); padding: 38px; background: #120b10; }
+      .alert-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 25px; }
+      .alert-badge { border: 1px solid rgba(255,79,139,.4); padding: 8px 11px; color: var(--pink); font-family: var(--mono); font-size: 9px; }
+      .alert h3 { color: var(--pink); font-size: clamp(48px, 6vw, 86px); }
+      .alert-copy { max-width: 850px; margin-top: 18px; font-size: 17px; }
+
+      .squad-film-card { min-height: 235px; }
+      .distribution-list { display: grid; gap: 11px; margin-top: 24px; color: var(--soft); font-family: var(--mono); font-size: 9px; }
+      .distribution-list span { display: flex; align-items: center; gap: 10px; }
+      .distribution-list strong { margin-left: auto; font-family: var(--display); font-size: 22px; font-weight: 400; }
+      .dist { display: inline-block; width: 13px; height: 13px; }
+      .struggle { background: var(--orange); } .release { background: var(--cyan); } .flow { background: var(--purple); } .recovery { background: var(--green); }
+      .summary-label { color: var(--muted); font-family: var(--mono); font-size: 8px; text-transform: uppercase; }
+      .summary-number { margin-top: 12px; font-family: var(--display); font-size: 62px; }
+      .crew { overflow-x: auto; border: 1px solid var(--line); }
+      table { width: 100%; min-width: 760px; border-collapse: collapse; }
+      th, td { padding: 16px; border-bottom: 1px solid var(--line); color: var(--soft); font-family: var(--mono); font-size: 9px; text-align: left; white-space: nowrap; }
+      th { color: var(--muted); font-weight: 400; }
+      td:first-child strong, td:first-child small { display: block; }
+      td:first-child strong { color: var(--white); font-family: var(--display); font-size: 20px; font-weight: 400; }
+      td:first-child small { margin-top: 5px; color: var(--muted); font-size: 7px; }
+      .phase-pill { display: inline-block; border: 1px solid currentColor; padding: 6px 9px; font-size: 7px; }
+      .release-pill { color: var(--cyan); } .flow-pill { color: var(--purple); } .struggle-pill { color: var(--orange); } .private-pill { color: var(--muted); }
+      .direction { color: var(--green); }
+
+      .chart-box { margin-top: 30px; border: 1px solid var(--line); padding: 30px; background: var(--panel); }
+      .chart-top { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 25px; }
+      .chart-title, .legend { color: var(--muted); font-family: var(--mono); font-size: 8px; letter-spacing: .08em; }
+      .legend { display: flex; flex-wrap: wrap; gap: 18px; }
+      .chart-svg { width: 100%; height: 260px; overflow: visible; }
+      .grid-line { stroke: rgba(255,255,255,.07); stroke-width: 1; }
+      .line-orange { fill: none; stroke: var(--orange); stroke-width: 3; }
+      .line-cyan { fill: none; stroke: var(--cyan); stroke-width: 2; }
+
+      .read-box h3 { margin-bottom: 20px; font-size: 50px; }
+      .spike { display: flex; align-items: end; gap: 15px; margin-top: 30px; border-top: 1px solid var(--line); padding-top: 25px; }
+      .spike-number { color: var(--orange); font-family: var(--display); font-size: 74px; }
+      .spike-label { padding-bottom: 10px; color: var(--muted); font-family: var(--mono); font-size: 9px; }
+
+      .privacy-layout { align-items: start; }
+      .privacy-card strong { display: block; margin-bottom: 12px; color: var(--white); font-family: var(--display); font-size: 38px; font-weight: 400; }
+      .privacy-list { display: grid; gap: 12px; margin-top: 22px; }
+      .privacy-list span { display: block; border: 1px solid var(--line); padding: 14px; color: var(--soft); font-family: var(--mono); font-size: 9px; line-height: 1.7; }
+
+      .journey { grid-template-columns: repeat(5, 1fr); }
+      .journey-item { min-height: 250px; padding: 25px; }
+      .journey-item h3 { margin: 55px 0 12px; font-size: 43px; }
+      .journey-item p { font-size: 11px; }
+
+      .cta { padding: 150px 0; text-align: center; }
+      .cta h2 { max-width: 1050px; margin: 20px auto 30px; font-size: clamp(65px, 9vw, 135px); }
+      .cta h2 span { color: var(--orange); }
+      .cta p { max-width: 650px; margin: 0 auto 35px; }
+      .cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+      .footer { padding: 30px 0; }
+      .footer-inner { display: flex; width: min(calc(100% - 56px), var(--max)); justify-content: space-between; gap: 20px; margin: auto; color: var(--muted); font-family: var(--mono); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+
+      .reveal { opacity: 0; transform: translateY(25px); transition: opacity .8s ease, transform .8s ease; }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 1050px) {
+        .hero-grid, .split, .cycle-layout, .protocol-layout, .maya-detail, .privacy-layout { grid-template-columns: 1fr; }
+        .hero { min-height: auto; padding-top: 120px; padding-bottom: 70px; }
+        .hero-visual { min-height: auto; }
+        .film-detail-grid { grid-template-columns: repeat(2, 1fr); }
+        .signal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .language-grid, .squad-film-summary { grid-template-columns: 1fr; }
+        .journey { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      @media (max-width: 700px) {
+        .container, .nav-inner, .hero-grid, .footer-inner { width: calc(100% - 32px); }
+        .nav { height: 62px; }
+        .nav-links { display: none; }
+        .brand { font-size: 23px; }
+        .hero { padding-top: 100px; }
+        .hero-title { font-size: clamp(54px, 17.5vw, 72px); }
+        .hero-description { font-size: 14px; }
+        .hero-trust { grid-template-columns: 1fr; }
+        .hero-trust-item, .hero-trust-item:nth-child(2), .hero-trust-item:last-child { padding: 12px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+        .hero-trust-item:last-child { border-bottom: 0; }
+        .hero-console { aspect-ratio: 1 / 1.12; }
+        .state-orbit { width: 260px; height: 260px; }
+        .state-core { width: 136px; height: 136px; }
+        .state-core strong { width: 92px; height: 92px; font-size: 48px; }
+        .state-core span { max-width: 115px; font-size: 6px; }
+        .state-node { width: 96px; padding: 9px; }
+        .node-a { left: 12px; top: 95px; }
+        .node-b { right: 12px; top: 115px; }
+        .node-c { left: 14px; bottom: 82px; }
+        .node-d { right: 14px; bottom: 78px; }
+        .hero-edge-badge { bottom: 60px; width: 200px; }
+        .section, .film-detail { padding: 85px 0; }
+        .section-head { display: block; }
+        .section-index { margin-top: 25px; }
+        h2 { font-size: 56px; }
+        .film-detail-grid, .journey { grid-template-columns: 1fr; }
+        .signal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .metric { min-height: 155px; padding: 17px; }
+        .metric-value { font-size: 38px; }
+        .flagged { grid-template-columns: 1fr; }
+        .flag-card.large { grid-row: auto; }
+        .split-image, .protocol-image, .responsible-image { height: 430px; }
+        .cycle { width: min(310px, 88vw); }
+        .cycle-center strong { font-size: 70px; }
+        .cycle-label { width: 82px; font-size: 7px; }
+        .footer-inner { flex-direction: column; }
+      }
+    </style>
   </head>
-  <body class="gameface-page">
-    <header class="site-header">
-      <a class="site-mark" href="index.html">Conscience IQ</a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a aria-current="page" href="gameface-athlete.html">GameFace</a>
-        <a href="press.html">Press</a>
-        <a href="use-cases.html">Healthcare</a>
-        <a href="ecgi-use-case/index.html">Civic Trust</a>
-      </nav>
+  <body>
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="brand">GAME<span>FACE</span></a>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="gameface-athlete.html">GameFace</a>
+          <a href="ecgi-use-case/index.html">Civic Trust</a>
+          <a href="use-cases.html">Healthcare</a>
+          <a href="press.html">Press</a>
+        </div>
+        <a href="index.html" class="nav-button">All Use Cases</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">GameFace / Main Product</div>
+          <h1 class="hero-title">Know where<br />you <span>are.</span><br />Before you<br />push harder.</h1>
+          <p class="hero-description">
+            Athletes are asked to perform under pressure every day. GameFace gives them and their support circle
+            a simpler way to understand readiness, recovery, pressure, and when support may be needed.
+          </p>
+          <div class="hero-actions">
+            <a href="#demo" class="btn btn-primary">Watch Demo</a>
+            <a href="index.html" class="btn btn-secondary">Back To Use Cases</a>
+          </div>
+          <div class="hero-trust">
+            <div class="hero-trust-item"><strong>Check In</strong><span>How the athlete feels</span></div>
+            <div class="hero-trust-item"><strong>Understand</strong><span>Readiness and recovery</span></div>
+            <div class="hero-trust-item"><strong>Support</strong><span>Athlete-led sharing</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Live GameFace athlete state visualization">
+          <div class="hero-console">
+            <div class="console-top">
+              <span>GameFace / Readiness View</span>
+              <span class="console-live"><i></i> Check-In Active</span>
+            </div>
+            <div class="state-orbit"><div class="orbit-sweep"></div></div>
+            <div class="state-core">
+              <strong>GO</strong>
+              <span>Know what support is needed before the next decision</span>
+            </div>
+            <div class="hero-edge-badge">
+              <small>Readiness</small>
+              <strong>61</strong>
+              <span>Recovery focus before full intensity</span>
+            </div>
+            <div class="state-node node-a"><small>Focus</small><strong style="color:var(--cyan);">Good</strong></div>
+            <div class="state-node node-b"><small>Recovery</small><strong style="color:var(--purple);">Low</strong></div>
+            <div class="state-node node-c"><small>Energy</small><strong style="color:var(--green);">Steady</strong></div>
+            <div class="state-node node-d"><small>Pressure</small><strong style="color:var(--orange);">High</strong></div>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <main>
-      <section class="section hero gameface-hero" aria-labelledby="page-title">
-        <div class="gameface-hero-copy">
-          <p class="eyebrow">Main Product</p>
-          <h1 id="page-title">GameFace</h1>
-          <p class="hero-title">A simple check-in that helps people understand how they are doing.</p>
-          <p class="lead">
-            GameFace is for people who are under pressure and the teams who support them. It turns a short
-            check-in into a clear picture: what feels normal, what may need attention, and what to do next.
-          </p>
-          <div class="actions">
-            <a class="button primary" href="#watch">Watch The Demo</a>
-            <a class="button secondary" href="press.html">See Press</a>
+    <div class="ticker">
+      <div class="ticker-inner">
+        <div class="ticker-item"><strong>Readiness</strong> / Ready / Caution / Recover</div>
+        <div class="ticker-item"><strong>Recovery</strong> / Sleep / Load / Reset</div>
+        <div class="ticker-item"><strong>Pressure</strong> / Calm / Strain / Support</div>
+        <div class="ticker-item"><strong>Team</strong> / Athlete / Coach / Support circle</div>
+        <div class="ticker-item"><strong>Control</strong> / Athlete decides what is shared</div>
+        <div class="ticker-item"><strong>Readiness</strong> / Ready / Caution / Recover</div>
+        <div class="ticker-item"><strong>Recovery</strong> / Sleep / Load / Reset</div>
+      </div>
+    </div>
+
+    <section class="film-detail">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">Where It Fits</div>
+            <h2>Built for athletes in real performance moments.</h2>
+            <p>GameFace can support athletes across team sports, individual sports, training days, match days, and recovery periods.</p>
           </div>
+          <div class="section-index">Sport / Competition / Performance</div>
         </div>
+        <div class="film-detail-grid">
+          <article class="film-detail-card reveal"><div class="detail-index">01</div><h3>Before</h3><p>Check how ready the athlete is before the session begins.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">02</div><h3>During</h3><p>Understand pressure, focus, and how the athlete is responding.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">03</div><h3>After</h3><p>Support recovery instead of guessing what the athlete needs.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">04</div><h3>Team</h3><p>Help coaches and support staff see who may need attention.</p></article>
+        </div>
+      </div>
+    </section>
 
-        <aside class="gameface-summary" aria-label="GameFace simple summary">
-          <span>GameFace in plain English</span>
-          <strong>Check in. Understand. Take the next step.</strong>
-          <div class="summary-steps">
-            <div><b>1</b><p>Answer a few natural prompts.</p></div>
-            <div><b>2</b><p>See a simple readiness picture.</p></div>
-            <div><b>3</b><p>Get a useful next step.</p></div>
+    <section class="section" id="demo">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">Product Demo</div>
+            <h2>See how<br />GameFace works</h2>
+            <p>A short look at how an athlete check-in can turn into a useful readiness view.</p>
           </div>
-        </aside>
-      </section>
+          <div class="section-index">01 / Product Demo</div>
+        </div>
+        <div class="video-shell reveal">
+          <div class="video-label">GameFace / Product Demo</div>
+          <video controls playsinline preload="metadata">
+            <source src="https://video.wixstatic.com/video/ec2a88_0baa38042529497195dd0109a440125d/480p/mp4/file.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </section>
 
-      <section class="home-summary gameface-proof" aria-label="What GameFace explains">
-        <div>
-          <span>01</span>
-          <strong>For The Person</strong>
-          <p>Helps someone notice stress before it becomes a bigger problem.</p>
-        </div>
-        <div>
-          <span>02</span>
-          <strong>For The Support Team</strong>
-          <p>Gives coaches, leaders, and care teams clearer context without guessing.</p>
-        </div>
-        <div>
-          <span>03</span>
-          <strong>For The Next Decision</strong>
-          <p>Points toward rest, reset, conversation, support, or follow-up.</p>
-        </div>
-      </section>
-
-      <section class="section gameface-explain" aria-labelledby="unknown-title">
-        <div class="section-heading">
-          <p class="eyebrow">From Unknown To Known</p>
-          <h2 id="unknown-title">Most people say they are fine until pressure shows up somewhere else.</h2>
-          <p class="lead">
-            GameFace is not meant to feel like homework. It starts with a simple truth: people often
-            carry stress quietly. The product helps name what is happening early, in language anyone can understand.
-          </p>
-        </div>
-        <div class="gameface-path">
-          <article>
-            <span>Before</span>
-            <h3>“I think I’m okay.”</h3>
-            <p>The person may be tired, tense, distracted, or overloaded, but the signal is easy to miss.</p>
-          </article>
-          <article>
-            <span>During</span>
-            <h3>A short check-in</h3>
-            <p>GameFace asks natural questions and builds a simple picture from the response.</p>
-          </article>
-          <article>
-            <span>After</span>
-            <h3>“Here’s what to do next.”</h3>
-            <p>The result is a plain-language next step, not a page of science.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section image-story" id="watch" aria-labelledby="watch-title">
-        <div class="section-heading">
-          <p class="eyebrow">Watch</p>
-          <h2 id="watch-title">Show the product before explaining the details.</h2>
-          <p class="lead">
-            These clips should do the heavy lifting for first-time visitors. Keep the copy short and let people see
-            how GameFace moves from a check-in to a useful summary.
-          </p>
-        </div>
-        <div class="image-grid video-grid" aria-label="GameFace videos">
-          <figure class="image-card video-card">
-            <video class="lazy-video" autoplay muted loop playsinline preload="none" poster="IMAGES/poster-ui-before.webp">
-              <source data-src="VIDEOS/UI%20Before%20-%20CIQ%20x%20Healthcare%20.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </figure>
-          <figure class="image-card video-card">
-            <video class="lazy-video" autoplay muted loop playsinline preload="none" poster="IMAGES/poster-ui-after.webp">
-              <source data-src="VIDEOS/UI%20after.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </figure>
-        </div>
-      </section>
-
-      <section class="section healthcare-detail" aria-labelledby="helps-title">
-        <div>
-          <p class="eyebrow">Who It Helps</p>
-          <h2 id="helps-title">GameFace belongs anywhere pressure affects performance, care, or judgment.</h2>
-          <div class="text-column">
-            <p class="text-card">
-              <strong>Athletes and teams:</strong> understand readiness, recovery, and when support may help.
-            </p>
-            <p class="text-card">
-              <strong>Leaders and staff:</strong> notice strain earlier and check in before burnout becomes visible.
-            </p>
-            <p class="text-card">
-              <strong>Care and support settings:</strong> keep the conversation human, simple, and action-focused.
-            </p>
+    <section class="film-detail">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">What Happens Next</div>
+            <h2>From check-in<br />to support.</h2>
+            <p>GameFace starts with a simple check-in, then helps the athlete and team understand readiness, recovery, and the next helpful step.</p>
           </div>
+          <div class="section-index">Film / Complete System</div>
         </div>
+        <div class="film-detail-grid">
+          <article class="film-detail-card reveal"><div class="detail-index">01 / Check-in</div><h3>Ask simply</h3><p>The athlete answers a short check-in before training or competition.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">02 / Readiness</div><h3>See readiness</h3><p>The view shows whether the athlete looks ready, strained, or in need of recovery.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">03 / Pressure</div><h3>Notice pressure</h3><p>Pressure is shown in plain language so the athlete can understand what is changing.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">04 / Recovery</div><h3>Support recovery</h3><p>The athlete gets a useful next step instead of another report to read.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">05 / Coach</div><h3>Guide the coach</h3><p>Coaches can see who may need a lighter load, a reset, or a conversation.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">06 / Team</div><h3>See the squad</h3><p>A team view helps staff support several athletes without guessing.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">07 / Action</div><h3>Take action</h3><p>Breathing, attention reset, and reframe prompts turn insight into something useful.</p></article>
+          <article class="film-detail-card reveal"><div class="detail-index">08 / Control</div><h3>Share with control</h3><p>The athlete decides what is shared, with whom, and when.</p></article>
+        </div>
+      </div>
+    </section>
 
-        <aside class="product-panel product-panel-static">
-          <h3>What visitors should remember</h3>
-          <div class="workflow">
-            <div class="workflow-item">
-              <div class="icon">01</div>
-              <div><strong>It is simple</strong><br /><span>No special background required.</span></div>
-            </div>
-            <div class="workflow-item">
-              <div class="icon">02</div>
-              <div><strong>It is useful</strong><br /><span>It gives a next step, not just a score.</span></div>
-            </div>
-            <div class="workflow-item">
-              <div class="icon">03</div>
-              <div><strong>It is human</strong><br /><span>The person stays at the center.</span></div>
+    <section class="section">
+      <div class="container">
+        <div class="split">
+          <div class="reveal">
+            <img class="split-image" src="https://static.wixstatic.com/media/ec2a88_cdd9fc465b594c0a8ddfcb91c41d224b~mv2.png" alt="Athlete performance analysis" />
+          </div>
+          <div class="reveal">
+            <div class="eyebrow">Simple Check-In</div>
+            <h2>The athlete does not need another form</h2>
+            <p>GameFace can begin with a short conversation. The athlete does not need to complete another long form before every session.</p>
+            <div class="conversation"><small>On-device conversation</small>"Hey Maya. Kick-off's at 7:30. Ready for your scan? Look at the camera and just talk to me for a minute."</div>
+            <div class="device-contract"><small>GameFace voice / On-device</small>Camera and microphone on. Nothing leaves this device unshared.</div>
+            <div class="signal-board">
+              <div class="signal-row"><div class="signal-label">Readiness</div><div class="signal-items"><span class="signal-chip">Ready</span><span class="signal-chip">Caution</span><span class="signal-chip">Recover</span></div></div>
+              <div class="signal-row"><div class="signal-label">Support</div><div class="signal-items"><span class="signal-chip">Coach</span><span class="signal-chip">Teammate</span><span class="signal-chip">Specialist</span></div></div>
+              <div class="signal-row"><div class="signal-label">Next Step</div><div class="signal-items"><span class="signal-chip">Reset</span><span class="signal-chip">Rest</span><span class="signal-chip">Talk</span></div></div>
             </div>
           </div>
-        </aside>
-      </section>
+        </div>
+      </div>
+    </section>
 
-      <section class="section press-section gameface-media" aria-labelledby="media-title">
-        <div class="section-heading">
-          <p class="eyebrow">Media</p>
-          <h2 id="media-title">Use real photos and press to build confidence.</h2>
-          <p class="lead">
-            Keep the proof simple here. The photos, coverage, and event footage help a new visitor see
-            that there is a real company, real work, and real momentum behind GameFace.
-          </p>
+    <section class="section" id="signals">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">Flagged Windows</div>
+            <h2>Small signals.<br />Bigger context.</h2>
+          </div>
+          <div class="section-index">02 / Signal Analysis</div>
         </div>
-        <div class="gameface-media-grid">
-          <figure class="image-card">
-            <img src="IMAGES/icnwp-2026-kirby-event.jpeg" alt="Conscience IQ event delegates" loading="lazy" decoding="async" />
-            <figcaption>Conscience IQ at international conference events</figcaption>
-          </figure>
-          <figure class="image-card">
-            <img src="IMAGES/daily-ft-shelterzoom-ai-agenda.jpeg" alt="Daily FT press feature" loading="lazy" decoding="async" />
-            <figcaption>Press coverage and partnership news</figcaption>
-          </figure>
-          <figure class="image-card video-card">
-            <video class="manual-video" muted controls playsinline preload="none" poster="IMAGES/poster-cambridge-thumb.webp">
-              <source data-src="VIDEOS/Cambridge%20Highlights%20High%20Res.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </figure>
+        <div class="flagged">
+          <div class="flag-card large reveal">
+            <div class="eyebrow">Possible stress</div>
+            <h3>Flagged window</h3>
+            <div class="flag-number">1.4</div>
+            <div class="flag-description">Response latency in seconds.</div>
+            <div class="flag-description">Filled pause: "well"</div>
+            <div class="flag-description">One self-repair detected.</div>
+            <div class="disclaimer">Markers describe speech behaviour only.</div>
+          </div>
+          <div class="flag-card reveal"><div class="eyebrow">Pupil</div><h3>Dilation</h3><div class="flag-number">+8%</div><div class="flag-description">Sustained for 1.1 seconds across "up around three".</div></div>
+          <div class="flag-card reveal"><div class="eyebrow">Heart Rate</div><h3>Nominal</h3><div class="flag-number">72</div><div class="flag-description">BPM / within personal range. rPPG window.</div></div>
         </div>
-        <div class="actions">
-          <a class="button primary" href="press.html">Open Press Page</a>
-          <a class="button secondary" href="index.html">Back Home</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">Context</div>
+            <h2>Not one signal.<br />A picture.</h2>
+            <p>GameFace combines multiple observable markers rather than reducing an athlete's state to a single number.</p>
+          </div>
         </div>
-      </section>
-    </main>
+        <div class="signal-grid">
+          <div class="metric reveal"><div class="metric-name">Mental Load</div><div class="metric-value">Steady</div><div class="metric-source">Conversation</div></div>
+          <div class="metric reveal"><div class="metric-name">Type-token ratio</div><div class="metric-value">0.71</div><div class="metric-source">Language</div></div>
+          <div class="metric reveal"><div class="metric-name">Sentence stretch</div><div class="metric-value">Stable</div><div class="metric-source">Language</div></div>
+          <div class="metric reveal"><div class="metric-name">Syntactic simplification</div><div class="metric-value">None</div><div class="metric-source">Language</div></div>
+          <div class="metric reveal"><div class="metric-name">Blink rate</div><div class="metric-value">13 <span>/ min</span></div><div class="metric-source">Camera / Eye</div></div>
+          <div class="metric reveal"><div class="metric-name">Gaze hold</div><div class="metric-value">84 <span>%</span></div><div class="metric-source">Camera / Eye</div></div>
+          <div class="metric reveal"><div class="metric-name">HRV / RMSSD</div><div class="metric-value">32 <span>ms</span></div><div class="metric-source">Camera / rPPG</div></div>
+          <div class="metric reveal"><div class="metric-name">Session</div><div class="metric-value">Live</div><div class="metric-source">Multimodal</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">Transcript / Context Window</div>
+            <h2>Language<br />leaves clues.</h2>
+            <p>These markers describe observable behaviour and are interpreted together with the athlete's own baseline and longer-term context.</p>
+          </div>
+          <div class="section-index">Full transcript / 14 days</div>
+        </div>
+        <div class="language-grid">
+          <div class="language-card reveal"><div class="metric-name">Transcript markers</div><h3>Motivation signals</h3><div class="marker-list"><div class="marker-item"><span>Volitional phrasing</span><strong>x2</strong></div><div class="marker-item"><span>First-person agency</span><strong>x4</strong></div><div class="marker-item"><span>Goal-directed framing</span><strong>Present</strong></div><div class="marker-item"><span>Full transcript</span><strong>Available</strong></div></div></div>
+          <div class="language-card reveal"><div class="metric-name">Cognitive load</div><h3>Nominal.</h3><div class="metric-value" style="color:var(--green);">0.71</div><p style="margin-top:18px;">Type-token ratio 0.71. Mean sentence stretch stable. No syntactic simplification.</p></div>
+          <div class="language-card reveal"><div class="metric-name">Longer context</div><h3>14-day window.</h3><div class="metric-value" style="color:var(--cyan);">14 <span>days</span></div><p style="margin-top:18px;">Context is built from a longer window rather than one isolated moment.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cycle-layout">
+          <div class="reveal">
+            <div class="eyebrow">Recovery State</div>
+            <h2>Where are you in the cycle?</h2>
+            <p style="margin-top:25px;">State is not static. GameFace tracks movement across recovery, struggle, flow and release.</p>
+            <div class="edge-box">
+              <div><div class="metric-name">Edge position</div><div class="edge-number">61</div></div>
+              <div style="text-align:right;"><div class="metric-name">Change</div><div class="edge-number" style="color:var(--green);">+3</div><div class="metric-name">Since yesterday</div></div>
+            </div>
+            <p class="mono" style="font-size:10px;margin-top:20px;color:var(--orange);">Current state / Letting go</p>
+          </div>
+          <div class="cycle reveal">
+            <div class="cycle-label"><strong>Recovery</strong><span>Coming down</span></div>
+            <div class="cycle-label"><strong>Struggle</strong><span>Fighting it</span></div>
+            <div class="cycle-label"><strong>Flow</strong><span>In it</span></div>
+            <div class="cycle-label"><strong>Release</strong><span>Letting go</span></div>
+            <div class="cycle-center"><strong>61</strong><span>Edge position</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="recovery">
+      <div class="container">
+        <div class="protocol-layout">
+          <div class="reveal"><img class="protocol-image" src="https://static.wixstatic.com/media/ec2a88_3c20da67a04142b096acfd590dbb341d~mv2.png" alt="Athlete recovery and regulation" /></div>
+          <div>
+            <div class="section-head reveal"><div class="section-head-copy"><div class="eyebrow">Recovery / Next</div><h2>Do not just show the number</h2><p>Give the athlete something useful to do next.</p></div></div>
+            <div class="protocols">
+              <article class="protocol reveal"><div class="protocol-number">01 / Regulation breath</div><h3>Regulation breath</h3><p>A slow exhale pattern - in for four, out for eight - to take the edge off the pressure signal.</p><div class="protocol-meta">4 min / Personal protocol</div></article>
+              <article class="protocol reveal"><div class="protocol-number">02 / Attention reset</div><h3>Attention reset</h3><p>A single-point focus drill. Pick one fixed object at arm's length and hold it without scanning away.</p><div class="protocol-meta">1 min / Attention reset</div></article>
+              <article class="protocol reveal"><div class="protocol-number">03 / Reframe</div><h3>Reframe</h3><p>"Last match is data, not a debt." Stop the replay loop long enough for the rest to land.</p><div class="protocol-meta">30 sec / Reframe</div></article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="alert reveal">
+          <div class="alert-top"><div class="eyebrow" style="color:var(--pink);">Longitudinal signal</div><div class="alert-badge">Demo signal / example</div></div>
+          <h3>Burnout Alert</h3>
+          <p class="alert-copy">Ryan's burnout markers have increased significantly since last month.</p>
+          <p class="alert-copy">Ryan's burnout markers are up for a fourth straight month. HRV and recovery slope both down - training load unchanged.</p>
+          <div class="disclaimer">Example data shown for product demonstration. Longitudinal context, not a diagnosis.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="squad">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">GameFace / Athlete State Report</div>
+            <h2>Squad</h2>
+            <p>Coach view / L. Pereira / 6 athletes / 5 sharing. The film dashboard is dated 08.20.26.</p>
+          </div>
+          <div class="section-index">08.20.26 / Football / Midfield</div>
+        </div>
+        <div class="squad-film-summary reveal">
+          <article class="squad-film-card"><div class="summary-label">Distribution / where the squad sits today</div><div class="distribution-list"><span><i class="dist struggle"></i>Struggle <strong>2</strong></span><span><i class="dist release"></i>Release <strong>1</strong></span><span><i class="dist flow"></i>Flow <strong>2</strong></span><span><i class="dist recovery"></i>Recovery <strong>1</strong></span></div></article>
+          <article class="squad-film-card"><div class="summary-label">Attention / longest time in one phase</div><h3 style="font-size:32px;margin:22px 0 16px;">J. Okonkwo <span style="display:block;color:var(--orange);font-size:64px;">4 days</span></h3><p>Struggle is normal. Four days in it is longer than his own pattern - worth a conversation, not an intervention.</p></article>
+          <article class="squad-film-card"><div class="summary-label">Squad trace / share of squad in flow</div><div class="summary-number">33<span>%</span></div><p class="mono" style="font-size:10px;">This week</p></article>
+        </div>
+        <div class="crew reveal" style="margin-top:16px;">
+          <table>
+            <thead><tr><th>Athlete</th><th>Phase</th><th>Days in phase</th><th>Direction</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Maya</strong><small>Football / Midfield</small></td><td><span class="phase-pill release-pill">Release</span></td><td>2 d</td><td class="direction">To flow</td></tr>
+              <tr><td><strong>A. Moraes</strong><small>Swim / 200 free</small></td><td><span class="phase-pill flow-pill">Flow</span></td><td>3 d</td><td class="direction">Holding</td></tr>
+              <tr><td><strong>J. Okonkwo</strong><small>Athletics / 400 m</small></td><td><span class="phase-pill struggle-pill">Struggle</span></td><td>4 d</td><td class="direction">Static</td></tr>
+              <tr><td><strong>L. Hagen</strong><small>Judo / -73 kg</small></td><td><span class="phase-pill private-pill">Not shared</span></td><td>-</td><td>-</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="maya-detail">
+          <div class="reveal">
+            <div class="eyebrow">Athlete Detail / Maya</div>
+            <h2>Two traces.<br />One picture.</h2>
+            <p style="margin-top:25px;">Maya shared her full session summary across 14 days. Recovery and pressure can tell different stories at the same time.</p>
+            <div class="chart-box">
+              <div class="chart-top"><div class="chart-title">Recovery state vs pressure response</div><div class="legend"><span style="color:var(--cyan)">Recovery</span><span style="color:var(--orange)">Pressure</span></div></div>
+              <svg class="chart-svg" viewBox="0 0 700 250" preserveAspectRatio="none" aria-label="Recovery and pressure chart">
+                <line class="grid-line" x1="0" y1="40" x2="700" y2="40" /><line class="grid-line" x1="0" y1="90" x2="700" y2="90" /><line class="grid-line" x1="0" y1="140" x2="700" y2="140" /><line class="grid-line" x1="0" y1="190" x2="700" y2="190" />
+                <polyline class="line-cyan" points="0,190 55,175 110,155 165,135 220,120 275,115 330,105 385,100 440,85 495,80 550,75 605,65 700,55" />
+                <polyline class="line-orange" points="0,160 55,165 110,155 165,170 220,145 275,150 330,135 385,145 440,120 495,55 550,125 605,45 650,125 700,40" />
+              </svg>
+            </div>
+          </div>
+          <div class="read-box reveal">
+            <div class="read-title">The read</div>
+            <h3>What the two lines say together</h3>
+            <p>Her recovery line climbs back cleanly after every session. Recovery and fatigue are fine, and they have been all fortnight.</p>
+            <p style="margin-top:18px;">Pressure response is the other story. It spikes every time she faces a side that has beaten her.</p>
+            <div class="spike"><div class="spike-number">+46</div><div class="spike-label">Pressure spike<br />prior-defeat sides</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="privacy">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">Circle of Escalation</div>
+            <h2>Athlete controlled sharing</h2>
+            <p>You choose who sits in the circle and who hears first when something trends the wrong way.</p>
+          </div>
+          <div class="section-index">Privacy / Consent / Control</div>
+        </div>
+        <div class="privacy-layout">
+          <article class="privacy-card reveal"><strong>Nothing is stored as raw identity.</strong><p>GameFace is presented as a state-intelligence layer rather than a raw-identity archive.</p></article>
+          <article class="privacy-card reveal"><strong>Nothing reaches a coach, practitioner or programme without consent.</strong><p>The athlete controls what is shared, who receives it and when that permission changes.</p></article>
+        </div>
+        <div class="privacy-list reveal">
+          <span>Femi / Dad / receives a nudge to check in / no data</span>
+          <span>Tobi / Teammate / receives a nudge to check in / no data</span>
+          <span>L. Pereira / Coach / receives traffic light only</span>
+          <span>Dr K. Silva / Performance psychologist / receives full session history on request</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-copy">
+            <div class="eyebrow">The Workflow</div>
+            <h2>From moment<br />to moment</h2>
+          </div>
+        </div>
+        <div class="journey">
+          <div class="journey-item reveal"><div class="detail-index">01</div><h3>Check in</h3><p>Athlete speaks naturally.</p></div>
+          <div class="journey-item reveal"><div class="detail-index">02</div><h3>Read</h3><p>Multimodal signals are interpreted together.</p></div>
+          <div class="journey-item reveal"><div class="detail-index">03</div><h3>Act</h3><p>A practical protocol appears in the athlete's feed.</p></div>
+          <div class="journey-item reveal"><div class="detail-index">04</div><h3>Share</h3><p>Only what the athlete chooses reaches the circle.</p></div>
+          <div class="journey-item reveal"><div class="detail-index">05</div><h3>Perform</h3><p>Better context for the next moment.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="eyebrow">GameFace</div>
+        <h2>The next level starts with knowing the <span>state.</span></h2>
+        <p>Understand where the athlete is. Know what is changing. Give them something useful to do next.</p>
+        <div class="cta-actions">
+          <a href="#demo" class="btn btn-primary">Explore GameFace</a>
+          <a href="https://conscienceiq.com" target="_blank" rel="noopener" class="btn btn-secondary">ConscienceIQ.com</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>GameFace / Athlete State Intelligence</span>
+        <span>Signal / Context / Action / Consent</span>
+      </div>
+    </footer>
+
+    <script>
+      const revealElements = document.querySelectorAll(".reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      revealElements.forEach((element) => revealObserver.observe(element));
+
+      const video = document.querySelector("video");
+      if (video) {
+        const videoObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting && !video.paused) {
+                video.pause();
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+        videoObserver.observe(video);
+      }
+    </script>
   </body>
 </html>
