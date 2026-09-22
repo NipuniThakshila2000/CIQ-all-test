@@ -99,13 +99,13 @@ main {
 
 .nav-submenu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   right: 0;
   z-index: 30;
   display: grid;
   min-width: 190px;
   gap: 6px;
-  padding: 10px;
+  padding: 18px 10px 10px;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.96);
@@ -122,7 +122,7 @@ main {
 .nav-dropdown:focus-within .nav-submenu {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateY(-8px);
 }
 
 .nav-submenu a {
