@@ -103,6 +103,27 @@
       .brand span { color: var(--orange); }
       .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
       .nav-links a:hover { color: var(--white); }
+      .nav-dropdown { position: relative; display: inline-flex; }
+      .nav-dropdown-trigger::after { margin-left: 8px; content: "v"; font-size: 9px; }
+      .nav-submenu {
+        position: absolute;
+        top: calc(100% + 14px);
+        right: 0;
+        z-index: 20;
+        display: grid;
+        min-width: 185px;
+        gap: 6px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        background: rgba(5,6,8,.96);
+        box-shadow: 0 18px 45px rgba(0,0,0,.28);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity .18s ease, transform .18s ease;
+      }
+      .nav-dropdown:hover .nav-submenu, .nav-dropdown:focus-within .nav-submenu { opacity: 1; pointer-events: auto; transform: translateY(0); }
+      .nav-submenu a { display: block; padding: 11px 12px; white-space: nowrap; }
       .nav-button, .btn {
         display: inline-flex;
         min-height: 44px;
@@ -539,9 +560,14 @@
         <a href="index.html" class="brand">GAME<span>FACE</span></a>
         <div class="nav-links">
           <a href="index.html">Home</a>
-          <a href="gameface-athlete.html">GameFace</a>
-          <a href="ecgi-use-case/index.html">Civic Trust</a>
-          <a href="use-cases.html">Healthcare</a>
+          <div class="nav-dropdown">
+            <a class="nav-dropdown-trigger" href="index.html">Use Cases</a>
+            <div class="nav-submenu" aria-label="Use Cases submenu">
+              <a href="gameface-athlete.html">GameFace</a>
+              <a href="ecgi-use-case/index.html">Civic Trust</a>
+              <a href="use-cases.html">Healthcare</a>
+            </div>
+          </div>
           <a href="press.html">Press</a>
         </div>
         <a href="index.html" class="nav-button">All Use Cases</a>
