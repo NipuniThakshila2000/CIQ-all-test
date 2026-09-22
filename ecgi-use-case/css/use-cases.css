@@ -46,13 +46,13 @@ main {
   top: 0;
   z-index: 20;
   display: flex;
-  width: min(1180px, calc(100% - 40px));
+  width: 100%;
   min-height: 72px;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  margin: 0 auto;
-  padding: 14px 0;
+  margin: 0;
+  padding: 14px max(20px, calc((100vw - 1180px) / 2));
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(18px);
 }
@@ -1617,10 +1617,12 @@ h2 {
 
 @media (max-width: 700px) {
   .site-header {
-    width: min(100% - 24px, 1180px);
+    width: 100%;
     align-items: flex-start;
     flex-direction: column;
     gap: 12px;
+    padding-right: 12px;
+    padding-left: 12px;
   }
 
   .nav-links {
